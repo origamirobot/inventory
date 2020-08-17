@@ -1,0 +1,35 @@
+{
+	"name": "rebel-base-inventory",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"dependencies": {
+		"core-js": "^2.6.5",
+		"inversify-props": "^1.4.3",
+		"@types/better-sqlite3": "^5.4.0",
+		"@types/sqlite3": "^3.1.6",
+		"better-sqlite3": "^7.1.0",
+		"chalk": "^4.1.0",
+		"express": "^4.17.1",
+		"inversify": "^5.0.1",
+		"reflect-metadata": "^0.1.13",
+		"sqlite3": "^5.0.0",
+		"tslib": "^2.0.1"
+	},
+	"devDependencies": {
+		"@types/express": "^4.16.0",
+		"@types/node": "^14.0.27",
+		"nodemon": "^2.0.4",
+		"rimraf": "^3.0.2",
+		"ts-node": "^8.10.2",
+		"typescript": "^3.9.7"
+	},
+	"scripts": {
+		"test": "mocha",
+		"build": "rimraf ../build/server && tsc",
+		"start": "npm run build && node ../build/server/index.js "
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
+}
