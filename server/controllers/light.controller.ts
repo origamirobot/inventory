@@ -6,6 +6,7 @@ import { BaseController } from './base.controller';
 import { Request, Response } from 'express';
 import { LightRepository } from '../repositories';
 import { Light } from '../models';
+import * as hue from 'node-hue-api';
 
 @injectable()
 export class LightController extends BaseController {
@@ -67,6 +68,16 @@ export class LightController extends BaseController {
 		}
 	}
 
+	public discover = async (req: Request, res: Response) => {
+		try {
+			this.logger.debug('Received request for Light discovery');
+			const results = await hue.v3.discovery.upnpSearch(10000);
+			return this.json(res, results);
+		} catch(err) {
+			this.logger.error(err);
+			return this.jsonError(res, 500, { error: err });
+		}
+	}
 
 
 }

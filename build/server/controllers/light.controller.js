@@ -7,6 +7,7 @@ var inversify_1 = require("inversify");
 var base_controller_1 = require("./base.controller");
 var repositories_1 = require("../repositories");
 var models_1 = require("../models");
+var hue = require("node-hue-api");
 var LightController = /** @class */ (function (_super) {
     tslib_1.__extends(LightController, _super);
     function LightController(logger, settings, database, repository) {
@@ -90,6 +91,25 @@ var LightController = /** @class */ (function (_super) {
                         err_4 = _a.sent();
                         this.logger.error(err_4);
                         return [2 /*return*/, this.jsonError(res, 500, { error: err_4 })];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); };
+        _this.discover = function (req, res) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
+            var results, err_5;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        this.logger.debug('Received request for Light discovery');
+                        return [4 /*yield*/, hue.v3.discovery.upnpSearch(10000)];
+                    case 1:
+                        results = _a.sent();
+                        return [2 /*return*/, this.json(res, results)];
+                    case 2:
+                        err_5 = _a.sent();
+                        this.logger.error(err_5);
+                        return [2 /*return*/, this.jsonError(res, 500, { error: err_5 })];
                     case 3: return [2 /*return*/];
                 }
             });

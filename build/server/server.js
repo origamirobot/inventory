@@ -79,6 +79,7 @@ var Server = /** @class */ (function () {
         this.router.get('/api/rooms/:id', this.roomController.get);
         this.lightController = this.container.get('lightController');
         this.router.get('/api/lights', this.lightController.all);
+        this.router.get('/api/lights/discover', this.lightController.discover);
         this.router.post('/api/lights', this.lightController.save);
         this.router.put('/api/lights', this.lightController.save);
         this.router.delete('/api/lights/:id', this.lightController.delete);

@@ -111,6 +111,7 @@ export class Server {
 
 		this.lightController = this.container.get<LightController>('lightController');
 		this.router.get('/api/lights', this.lightController.all);
+		this.router.get('/api/lights/discover', this.lightController.discover);
 		this.router.post('/api/lights', this.lightController.save);
 		this.router.put('/api/lights', this.lightController.save);
 		this.router.delete('/api/lights/:id', this.lightController.delete);

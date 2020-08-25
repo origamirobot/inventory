@@ -12,6 +12,7 @@
 		"express": "^4.17.1",
 		"inversify": "^5.0.1",
 		"inversify-props": "^1.4.3",
+		"node-hue-api": "^4.0.9",
 		"node-ssh": "^11.0.0",
 		"reflect-metadata": "^0.1.13",
 		"sqlite3": "^5.0.0",

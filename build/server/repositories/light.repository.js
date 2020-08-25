@@ -20,7 +20,7 @@ var LightRepository = /** @class */ (function (_super) {
                 try {
                     this.logger.debug("Getting Light records from the database");
                     result = [];
-                    rows = this.database.db.prepare('SELECT [Id], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights]').all();
+                    rows = this.database.db.prepare('SELECT [Id], [ProductId], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights]').all();
                     for (i = 0; i < rows.length; i++) {
                         result.push(new models_1.Light(rows[i]));
                     }
@@ -40,7 +40,7 @@ var LightRepository = /** @class */ (function (_super) {
             return tslib_1.__generator(this, function (_a) {
                 try {
                     this.logger.debug("Getting Light record " + id + " from the database");
-                    row = this.database.db.prepare('SELECT [Id], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] WHERE [Id] = ?').get(id);
+                    row = this.database.db.prepare('SELECT [Id], [ProductId], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] WHERE [Id] = ?').get(id);
                     result = new models_1.Light(row);
                     return [2 /*return*/, result];
                 }
@@ -60,15 +60,15 @@ var LightRepository = /** @class */ (function (_super) {
                     if (obj.Id) {
                         this.logger.debug("Updating Light record " + obj.Id + " in the database");
                         this.database.db
-                            .prepare("UPDATE [Lights] SET [Name] = ?, [ModelNumber] = ?, [ModelName] = ?, [RoomId] = ?, [SW] = ?, [ManufacturerId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?")
-                            .run(obj.Name, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId, obj.Id);
+                            .prepare("UPDATE [Lights] SET [Name] = ?, [ProductId] = ? [ModelNumber] = ?, [ModelName] = ?, [RoomId] = ?, [SW] = ?, [ManufacturerId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?")
+                            .run(obj.Name, obj.ProductId, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId, obj.Id);
                     }
                     else {
                         this.logger.debug("Creating new Room record in the database");
                         this.database.db
-                            .prepare('INSERT INTO [Lights] ([Name], [ModelNumber], [ModelName], [RoomId], [SW], [ManufacturerId]) VALUES (?, ?, ?, ?, ?, ?)')
-                            .run(obj.Name, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId);
-                        result = this.database.db.prepare('SELECT [Id], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] ORDER BY [Id] DESC LIMIT 1').get();
+                            .prepare('INSERT INTO [Lights] ([Name], [ProductId], [ModelNumber], [ModelName], [RoomId], [SW], [ManufacturerId]) VALUES (?, ?, ?, ?, ?, ?, ?)')
+                            .run(obj.Name, obj.ProductId, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId);
+                        result = this.database.db.prepare('SELECT [Id], [ProductId], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] ORDER BY [Id] DESC LIMIT 1').get();
                         return [2 /*return*/, new models_1.Light(result)];
                     }
                     return [2 /*return*/, obj];

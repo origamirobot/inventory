@@ -9,6 +9,7 @@ export class Light {
 	public ModelName: string;
 	public ManufacturerId: number;
 	public Manufacturer: Manufacturer;
+	public ProductId: number;
 	public Room: Room;
 	public RoomId: number;
 	public SW: string;

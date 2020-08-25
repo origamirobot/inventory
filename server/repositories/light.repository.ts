@@ -18,7 +18,7 @@ export class LightRepository extends BaseRepository<Light> {
 		try {
 			this.logger.debug(`Getting Light records from the database`);
 			var result = [] as Light[];
-			var rows = this.database.db.prepare('SELECT [Id], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights]').all();
+			var rows = this.database.db.prepare('SELECT [Id], [ProductId], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights]').all();
 			
 			for(let i = 0; i < rows.length; i++) {
 				result.push(new Light(rows[i]));
@@ -33,7 +33,7 @@ export class LightRepository extends BaseRepository<Light> {
 	public async get(id: number): Promise<Light> {
 		try {
 			this.logger.debug(`Getting Light record ${id} from the database`);
-			var row = this.database.db.prepare('SELECT [Id], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] WHERE [Id] = ?').get(id);
+			var row = this.database.db.prepare('SELECT [Id], [ProductId], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] WHERE [Id] = ?').get(id);
 			var result = new Light(row);
 			return result;
 		} catch (err) {
@@ -47,16 +47,16 @@ export class LightRepository extends BaseRepository<Light> {
 			if (obj.Id) {
 				this.logger.debug(`Updating Light record ${obj.Id} in the database`);
 				this.database.db
-					.prepare(`UPDATE [Lights] SET [Name] = ?, [ModelNumber] = ?, [ModelName] = ?, [RoomId] = ?, [SW] = ?, [ManufacturerId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?`)
-					.run(obj.Name, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId, obj.Id);
+					.prepare(`UPDATE [Lights] SET [Name] = ?, [ProductId] = ? [ModelNumber] = ?, [ModelName] = ?, [RoomId] = ?, [SW] = ?, [ManufacturerId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?`)
+					.run(obj.Name, obj.ProductId, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId, obj.Id);
 
 				
 			} else {
 				this.logger.debug(`Creating new Room record in the database`);
 				this.database.db
-					.prepare('INSERT INTO [Lights] ([Name], [ModelNumber], [ModelName], [RoomId], [SW], [ManufacturerId]) VALUES (?, ?, ?, ?, ?, ?)')
-					.run(obj.Name, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId);
-				const result = this.database.db.prepare('SELECT [Id], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] ORDER BY [Id] DESC LIMIT 1').get();
+					.prepare('INSERT INTO [Lights] ([Name], [ProductId], [ModelNumber], [ModelName], [RoomId], [SW], [ManufacturerId]) VALUES (?, ?, ?, ?, ?, ?, ?)')
+					.run(obj.Name, obj.ProductId, obj.ModelNumber, obj.ModelName, obj.RoomId, obj.SW, obj.ManufacturerId);
+				const result = this.database.db.prepare('SELECT [Id], [ProductId], [Name], [ModelNumber], [ModelName], [ManufacturerId], [RoomId], [SW], [CreatedDate], [UpdatedDate] FROM [Lights] ORDER BY [Id] DESC LIMIT 1').get();
 				return new Light(result);
 			}
 			return obj;
@@ -75,5 +75,6 @@ export class LightRepository extends BaseRepository<Light> {
 			throw err;
 		}
 	}
+
 
 }
