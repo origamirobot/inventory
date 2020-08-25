@@ -2,8 +2,8 @@ import "reflect-metadata";
 import { Container } from 'inversify';
 import { ServerSettings, IServerSettings, DatabaseSettings, IDatabaseSettings, IRouterSettings, RouterSettings } from '../config';
 import { Logger, ILogger, IBanner, Banner, IDatabase, Database  } from '../core';
-import { ConnectionController, DeviceController, FieldController, ProductController, ManufacturerController, LocationController, RouterController } from '../controllers';
-import { ConnectionRepository, DeviceRepository, FieldRepository, ProductRepository, ManufacturerRepository, LocationRepository } from '../repositories';
+import { ConnectionController, DeviceController, FieldController, ProductController, ManufacturerController, RoomController, RouterController } from '../controllers';
+import { ConnectionRepository, DeviceRepository, FieldRepository, ProductRepository, ManufacturerRepository, RoomRepository } from '../repositories';
 import { IIpTableUtility, IpTableUtility, IRouterUtility, RouterUtility } from '../utilities';
 
 export class Dependencies {
@@ -31,7 +31,7 @@ export class Dependencies {
 		container.bind<FieldController>('fieldController').to(FieldController);
 		container.bind<ProductController>('productController').to(ProductController);
 		container.bind<ManufacturerController>('manufacturerController').to(ManufacturerController);
-		container.bind<LocationController>('locationController').to(LocationController);
+		container.bind<RoomController>('roomController').to(RoomController);
 		container.bind<RouterController>('routerController').to(RouterController);
 
 		container.bind<ConnectionRepository>('connectionRepository').to(ConnectionRepository);
@@ -39,7 +39,7 @@ export class Dependencies {
 		container.bind<FieldRepository>('fieldRepository').to(FieldRepository);
 		container.bind<ProductRepository>('productRepository').to(ProductRepository);
 		container.bind<ManufacturerRepository>('manufacturerRepository').to(ManufacturerRepository);
-		container.bind<LocationRepository>('locationRepository').to(LocationRepository);
+		container.bind<RoomRepository>('roomRepository').to(RoomRepository);
 
 		container.bind<IIpTableUtility>('ipTableUtility').to(IpTableUtility);
 		container.bind<IRouterUtility>('routerUtility').to(RouterUtility);

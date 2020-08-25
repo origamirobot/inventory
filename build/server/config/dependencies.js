@@ -34,14 +34,14 @@ var Dependencies = /** @class */ (function () {
                 container.bind('fieldController').to(controllers_1.FieldController);
                 container.bind('productController').to(controllers_1.ProductController);
                 container.bind('manufacturerController').to(controllers_1.ManufacturerController);
-                container.bind('locationController').to(controllers_1.LocationController);
+                container.bind('roomController').to(controllers_1.RoomController);
                 container.bind('routerController').to(controllers_1.RouterController);
                 container.bind('connectionRepository').to(repositories_1.ConnectionRepository);
                 container.bind('deviceRepository').to(repositories_1.DeviceRepository);
                 container.bind('fieldRepository').to(repositories_1.FieldRepository);
                 container.bind('productRepository').to(repositories_1.ProductRepository);
                 container.bind('manufacturerRepository').to(repositories_1.ManufacturerRepository);
-                container.bind('locationRepository').to(repositories_1.LocationRepository);
+                container.bind('roomRepository').to(repositories_1.RoomRepository);
                 container.bind('ipTableUtility').to(utilities_1.IpTableUtility);
                 container.bind('routerUtility').to(utilities_1.RouterUtility);
                 return [2 /*return*/];

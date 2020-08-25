@@ -14,6 +14,6 @@ var product_model_1 = require("./product.model");
 Object.defineProperty(exports, "Product", { enumerable: true, get: function () { return product_model_1.Product; } });
 var pagedResult_model_1 = require("./pagedResult.model");
 Object.defineProperty(exports, "PagedResult", { enumerable: true, get: function () { return pagedResult_model_1.PagedResult; } });
-var location_model_1 = require("./location.model");
-Object.defineProperty(exports, "Location", { enumerable: true, get: function () { return location_model_1.Location; } });
+var room_model_1 = require("./room.model");
+Object.defineProperty(exports, "Room", { enumerable: true, get: function () { return room_model_1.Room; } });
 //# sourceMappingURL=index.js.map

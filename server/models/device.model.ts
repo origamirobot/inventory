@@ -5,7 +5,7 @@ export class Device {
 	public DefaultHostName: string;
 	public ModelNumber: string;
 	public ProductId: number;
-	public LocationId: number;
+	public RoomId: number;
 	public ManufacturerId: number;
 	public Name: string;
 	public Notes: string;

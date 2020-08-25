@@ -20,7 +20,7 @@ var DeviceRepository = /** @class */ (function (_super) {
                 try {
                     this.logger.debug("Getting Device records from the database");
                     result = [];
-                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices').all();
+                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices').all();
                     for (i = 0; i < rows.length; i++) {
                         result.push(new models_1.Device(rows[i]));
                     }
@@ -41,7 +41,7 @@ var DeviceRepository = /** @class */ (function (_super) {
                 try {
                     this.logger.debug("Getting Device records for product " + productId + " from the database");
                     result = [];
-                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ProductId] = ?').all(productId);
+                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ProductId] = ?').all(productId);
                     for (i = 0; i < rows.length; i++) {
                         result.push(new models_1.Device(rows[i]));
                     }
@@ -55,14 +55,14 @@ var DeviceRepository = /** @class */ (function (_super) {
             });
         });
     };
-    DeviceRepository.prototype.listByLocation = function (locationId) {
+    DeviceRepository.prototype.listByLocation = function (roomId) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             var result, rows, i;
             return tslib_1.__generator(this, function (_a) {
                 try {
-                    this.logger.debug("Getting Device records for location " + locationId + " from the database");
+                    this.logger.debug("Getting Device records for RoomId " + roomId + " from the database");
                     result = [];
-                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [LocationId] = ?').all(locationId);
+                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [RoomId] = ?').all(roomId);
                     for (i = 0; i < rows.length; i++) {
                         result.push(new models_1.Device(rows[i]));
                     }
@@ -83,7 +83,7 @@ var DeviceRepository = /** @class */ (function (_super) {
                 try {
                     this.logger.debug("Getting Device records for manufacturer " + manufacturerId + " from the database");
                     result = [];
-                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ManufacturerId] = ?').all(manufacturerId);
+                    rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ManufacturerId] = ?').all(manufacturerId);
                     for (i = 0; i < rows.length; i++) {
                         result.push(new models_1.Device(rows[i]));
                     }
@@ -103,7 +103,7 @@ var DeviceRepository = /** @class */ (function (_super) {
             return tslib_1.__generator(this, function (_a) {
                 try {
                     this.logger.debug("Getting Device record " + id + " from the database");
-                    row = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices WHERE [Id] = ?').get(id);
+                    row = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices WHERE [Id] = ?').get(id);
                     result = new models_1.Device(row);
                     return [2 /*return*/, result];
                 }
@@ -123,15 +123,15 @@ var DeviceRepository = /** @class */ (function (_super) {
                     if (obj.Id) {
                         this.logger.debug("Updating Device record " + obj.Id + " in the database");
                         this.database.db
-                            .prepare("UPDATE [Devices] SET [Name] = ?, [IsActive] = ?, [ModelNumber] = ?, [LocationId] = ?, [DefaultHostName] = ?, [SerialNumber] = ?, [Notes] = ?, [ManufacturerId] = ?, [ProductId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?")
-                            .run(obj.Name, obj.IsActive, obj.ModelNumber, obj.LocationId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId, obj.Id);
+                            .prepare("UPDATE [Devices] SET [Name] = ?, [IsActive] = ?, [ModelNumber] = ?, [RoomId] = ?, [DefaultHostName] = ?, [SerialNumber] = ?, [Notes] = ?, [ManufacturerId] = ?, [ProductId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?")
+                            .run(obj.Name, obj.IsActive ? 1 : 0, obj.ModelNumber, obj.RoomId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId, obj.Id);
                     }
                     else {
                         this.logger.debug("Creating new Device record in the database");
                         this.database.db
-                            .prepare('INSERT INTO [Devices] ([Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [ManufacturerId], [ProductId]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
-                            .run(obj.Name, obj.IsActive, obj.ModelNumber, obj.LocationId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId);
-                        result = this.database.db.prepare('SELECT [Id], [IsActive], [Name], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] ORDER BY [Id] DESC LIMIT 1').get();
+                            .prepare('INSERT INTO [Devices] ([Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [ManufacturerId], [ProductId]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+                            .run(obj.Name, obj.IsActive ? 1 : 0, obj.ModelNumber, obj.RoomId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId);
+                        result = this.database.db.prepare('SELECT [Id], [IsActive], [Name], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] ORDER BY [Id] DESC LIMIT 1').get();
                         return [2 /*return*/, new models_1.Device(result)];
                     }
                     return [2 /*return*/, obj];

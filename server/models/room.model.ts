@@ -1,5 +1,5 @@
 
-export class Location {
+export class Room {
 
 	public Id: number;
 	public Name: string;
@@ -7,7 +7,7 @@ export class Location {
 	public UpdatedDate?: Date;
 	public Description: string;
 
-	constructor(init?:Partial<Location>) {
+	constructor(init?:Partial<Room>) {
 		Object.assign(this, init);
 	}
 

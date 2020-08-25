@@ -12,6 +12,6 @@ var field_repository_1 = require("./field.repository");
 Object.defineProperty(exports, "FieldRepository", { enumerable: true, get: function () { return field_repository_1.FieldRepository; } });
 var product_repository_1 = require("./product.repository");
 Object.defineProperty(exports, "ProductRepository", { enumerable: true, get: function () { return product_repository_1.ProductRepository; } });
-var location_repository_1 = require("./location.repository");
-Object.defineProperty(exports, "LocationRepository", { enumerable: true, get: function () { return location_repository_1.LocationRepository; } });
+var room_repository_1 = require("./room.repository");
+Object.defineProperty(exports, "RoomRepository", { enumerable: true, get: function () { return room_repository_1.RoomRepository; } });
 //# sourceMappingURL=index.js.map

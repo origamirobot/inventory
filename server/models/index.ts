@@ -6,4 +6,4 @@ export { LogLevel } from './logLevel.enum';
 export { Manufacturer } from './manufacturer.model';
 export { Product } from './product.model';
 export { PagedResult } from './pagedResult.model';
-export { Location } from './location.model';
+export { Room } from './room.model';

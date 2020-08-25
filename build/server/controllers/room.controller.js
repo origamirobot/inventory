@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LocationController = void 0;
+exports.RoomController = void 0;
 var tslib_1 = require("tslib");
 require("reflect-metadata");
 var inversify_1 = require("inversify");
 var base_controller_1 = require("./base.controller");
 var repositories_1 = require("../repositories");
 var models_1 = require("../models");
-var LocationController = /** @class */ (function (_super) {
-    tslib_1.__extends(LocationController, _super);
-    function LocationController(logger, settings, database, repository) {
+var RoomController = /** @class */ (function (_super) {
+    tslib_1.__extends(RoomController, _super);
+    function RoomController(logger, settings, database, repository) {
         var _this = _super.call(this, logger, settings, database) || this;
         _this.logger = logger;
         _this.settings = settings;
@@ -21,7 +21,7 @@ var LocationController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.logger.debug('Received request for location list');
+                        this.logger.debug('Received request for Room list');
                         return [4 /*yield*/, this.repository.list()];
                     case 1:
                         result = _a.sent();
@@ -40,7 +40,7 @@ var LocationController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.logger.debug('Received request for location details');
+                        this.logger.debug('Received request for Room details');
                         id = parseInt(req.params.id);
                         return [4 /*yield*/, this.repository.get(id)];
                     case 1:
@@ -60,8 +60,8 @@ var LocationController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.logger.debug('Received request for location save');
-                        obj = new models_1.Location(req.body);
+                        this.logger.debug('Received request for Room save');
+                        obj = new models_1.Room(req.body);
                         return [4 /*yield*/, this.repository.save(obj)];
                     case 1:
                         result = _a.sent();
@@ -80,7 +80,7 @@ var LocationController = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.logger.debug('Received request for location delete');
+                        this.logger.debug('Received request for Room delete');
                         id = parseInt(req.params.id);
                         return [4 /*yield*/, this.repository.delete(id)];
                     case 1:
@@ -96,15 +96,15 @@ var LocationController = /** @class */ (function (_super) {
         }); };
         return _this;
     }
-    LocationController = tslib_1.__decorate([
+    RoomController = tslib_1.__decorate([
         inversify_1.injectable(),
         tslib_1.__param(0, inversify_1.inject('logger')),
         tslib_1.__param(1, inversify_1.inject('serverSettings')),
         tslib_1.__param(2, inversify_1.inject('database')),
-        tslib_1.__param(3, inversify_1.inject('locationRepository')),
-        tslib_1.__metadata("design:paramtypes", [Object, Object, Object, repositories_1.LocationRepository])
-    ], LocationController);
-    return LocationController;
+        tslib_1.__param(3, inversify_1.inject('roomRepository')),
+        tslib_1.__metadata("design:paramtypes", [Object, Object, Object, repositories_1.RoomRepository])
+    ], RoomController);
+    return RoomController;
 }(base_controller_1.BaseController));
-exports.LocationController = LocationController;
-//# sourceMappingURL=location.controller.js.map
+exports.RoomController = RoomController;
+//# sourceMappingURL=room.controller.js.map

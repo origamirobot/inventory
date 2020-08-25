@@ -22,7 +22,7 @@ export class DeviceRepository extends BaseRepository<Device> {
 		try {
 			this.logger.debug(`Getting Device records from the database`);
 			var result = [] as Device[];
-			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices').all();
+			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices').all();
 			for(let i = 0; i < rows.length; i++) {
 				result.push(new Device(rows[i]));
 			}
@@ -37,7 +37,7 @@ export class DeviceRepository extends BaseRepository<Device> {
 		try {
 			this.logger.debug(`Getting Device records for product ${productId} from the database`);
 			var result = [] as Device[];
-			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ProductId] = ?').all(productId);
+			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ProductId] = ?').all(productId);
 			for(let i = 0; i < rows.length; i++) {
 				result.push(new Device(rows[i]));
 			}
@@ -48,11 +48,11 @@ export class DeviceRepository extends BaseRepository<Device> {
 		}
 	}
 
-	public async listByLocation(locationId: number): Promise<Device[]> {
+	public async listByLocation(roomId: number): Promise<Device[]> {
 		try {
-			this.logger.debug(`Getting Device records for location ${locationId} from the database`);
+			this.logger.debug(`Getting Device records for RoomId ${roomId} from the database`);
 			var result = [] as Device[];
-			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [LocationId] = ?').all(locationId);
+			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [RoomId] = ?').all(roomId);
 			for(let i = 0; i < rows.length; i++) {
 				result.push(new Device(rows[i]));
 			}
@@ -67,7 +67,7 @@ export class DeviceRepository extends BaseRepository<Device> {
 		try {
 			this.logger.debug(`Getting Device records for manufacturer ${manufacturerId} from the database`);
 			var result = [] as Device[];
-			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ManufacturerId] = ?').all(manufacturerId);
+			var rows = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [SerialNumber], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] WHERE [ManufacturerId] = ?').all(manufacturerId);
 			for(let i = 0; i < rows.length; i++) {
 				result.push(new Device(rows[i]));
 			}
@@ -81,7 +81,7 @@ export class DeviceRepository extends BaseRepository<Device> {
 	public async get(id: number): Promise<Device> {
 		try {
 			this.logger.debug(`Getting Device record ${id} from the database`);
-			var row = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices WHERE [Id] = ?').get(id);
+			var row = this.database.db.prepare('SELECT [Id], [Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM Devices WHERE [Id] = ?').get(id);
 			var result = new Device(row);
 			return result;
 		} catch (err) {
@@ -95,16 +95,16 @@ export class DeviceRepository extends BaseRepository<Device> {
 			if (obj.Id) {
 				this.logger.debug(`Updating Device record ${obj.Id} in the database`);
 				this.database.db
-					.prepare(`UPDATE [Devices] SET [Name] = ?, [IsActive] = ?, [ModelNumber] = ?, [LocationId] = ?, [DefaultHostName] = ?, [SerialNumber] = ?, [Notes] = ?, [ManufacturerId] = ?, [ProductId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?`)
-					.run(obj.Name, obj.IsActive, obj.ModelNumber, obj.LocationId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId, obj.Id);
+					.prepare(`UPDATE [Devices] SET [Name] = ?, [IsActive] = ?, [ModelNumber] = ?, [RoomId] = ?, [DefaultHostName] = ?, [SerialNumber] = ?, [Notes] = ?, [ManufacturerId] = ?, [ProductId] = ?, [UpdatedDate] = datetime('now', 'localtime') WHERE [Id] = ?`)
+					.run(obj.Name, obj.IsActive ? 1 : 0, obj.ModelNumber, obj.RoomId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId, obj.Id);
 
 				
 			} else {
 				this.logger.debug(`Creating new Device record in the database`);
 				this.database.db
-					.prepare('INSERT INTO [Devices] ([Name], [IsActive], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [ManufacturerId], [ProductId]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
-					.run(obj.Name, obj.IsActive, obj.ModelNumber, obj.LocationId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId);
-				const result = this.database.db.prepare('SELECT [Id], [IsActive], [Name], [ModelNumber], [LocationId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] ORDER BY [Id] DESC LIMIT 1').get();
+					.prepare('INSERT INTO [Devices] ([Name], [IsActive], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [ManufacturerId], [ProductId]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+					.run(obj.Name, obj.IsActive ? 1 : 0, obj.ModelNumber, obj.RoomId, obj.DefaultHostName, obj.SerialNumber, obj.Notes, obj.ManufacturerId, obj.ProductId);
+				const result = this.database.db.prepare('SELECT [Id], [IsActive], [Name], [ModelNumber], [RoomId], [DefaultHostName], [SerialNumber], [Notes], [CreatedDate], [UpdatedDate], [ManufacturerId], [ProductId] FROM [Devices] ORDER BY [Id] DESC LIMIT 1').get();
 				return new Device(result);
 			}
 			return obj;
