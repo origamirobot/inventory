@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { Container } from 'inversify';
-import { ServerSettings, IServerSettings, DatabaseSettings, IDatabaseSettings } from '../config';
+import { ServerSettings, IServerSettings, DatabaseSettings, IDatabaseSettings, IRouterSettings, RouterSettings } from '../config';
 import { Logger, ILogger, IBanner, Banner, IDatabase, Database  } from '../core';
-import { ConnectionController, DeviceController, FieldController, ProductController, ManufacturerController, LocationController } from '../controllers';
+import { ConnectionController, DeviceController, FieldController, ProductController, ManufacturerController, LocationController, RouterController } from '../controllers';
 import { ConnectionRepository, DeviceRepository, FieldRepository, ProductRepository, ManufacturerRepository, LocationRepository } from '../repositories';
-
+import { IIpTableUtility, IpTableUtility, IRouterUtility, RouterUtility } from '../utilities';
 
 export class Dependencies {
 
@@ -14,7 +14,7 @@ export class Dependencies {
 		const banner = new Banner();
 		const dbSettings = new DatabaseSettings();
 		const database = new Database(settings, dbSettings, logger);
-
+		const router = new RouterSettings();
 
 		logger.debug('Registering dependencies');
 		container.bind<IServerSettings>('serverSettings').toConstantValue(settings);
@@ -22,6 +22,7 @@ export class Dependencies {
 		container.bind<ILogger>('logger').toConstantValue(logger);
 		container.bind<IBanner>('banner').toConstantValue(banner);
 		container.bind<IDatabase>('database').toConstantValue(database);
+		container.bind<IRouterSettings>('routerSettings').toConstantValue(router);
 		container.bind<Container>('container').toConstantValue(container);
 		
 
@@ -31,6 +32,7 @@ export class Dependencies {
 		container.bind<ProductController>('productController').to(ProductController);
 		container.bind<ManufacturerController>('manufacturerController').to(ManufacturerController);
 		container.bind<LocationController>('locationController').to(LocationController);
+		container.bind<RouterController>('routerController').to(RouterController);
 
 		container.bind<ConnectionRepository>('connectionRepository').to(ConnectionRepository);
 		container.bind<DeviceRepository>('deviceRepository').to(DeviceRepository);
@@ -38,6 +40,9 @@ export class Dependencies {
 		container.bind<ProductRepository>('productRepository').to(ProductRepository);
 		container.bind<ManufacturerRepository>('manufacturerRepository').to(ManufacturerRepository);
 		container.bind<LocationRepository>('locationRepository').to(LocationRepository);
+
+		container.bind<IIpTableUtility>('ipTableUtility').to(IpTableUtility);
+		container.bind<IRouterUtility>('routerUtility').to(RouterUtility);
 
 	}
 

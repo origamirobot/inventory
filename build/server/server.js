@@ -77,6 +77,9 @@ var Server = /** @class */ (function () {
         this.router.put('/api/locations', this.locationController.save);
         this.router.delete('/api/locations/:id', this.locationController.delete);
         this.router.get('/api/locations/:id', this.locationController.get);
+        this.routerController = this.container.get('routerController');
+        this.router.get('/api/router/iptables', this.routerController.iptables);
+        this.router.get('/api/router/settings', this.routerController.listSettings);
         this.router.use(express.static(staticContent));
         this.router.all('/*', function (req, res, next) {
             res.sendFile(path.join(__dirname, '../client/index.html'));

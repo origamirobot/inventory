@@ -6,3 +6,4 @@ export { FieldController } from './field.controller';
 export { ManufacturerController } from './manufacturer.controller';
 export { ProductController } from './product.controller';
 export { LocationController } from './location.controller';
+export { RouterController } from './router.controller';

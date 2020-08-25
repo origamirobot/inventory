@@ -4,7 +4,7 @@ import * as path from 'path';
 import { inject, Container } from "inversify";
 import { ILogger, IBanner, IDatabase } from './core';
 import { IServerSettings, IDatabaseSettings } from './config';
-import { DeviceController, ConnectionController, ManufacturerController, FieldController, ProductController, LocationController } from './controllers';
+import { DeviceController, ConnectionController, ManufacturerController, FieldController, ProductController, LocationController, RouterController } from './controllers';
 
 
 export class Server {
@@ -18,6 +18,7 @@ export class Server {
 	protected manufacturerController: ManufacturerController;
 	protected fieldController: FieldController;
 	protected locationController: LocationController;
+	protected routerController: RouterController;
 
 	constructor(
 		@inject('logger') private logger: ILogger,
@@ -107,6 +108,9 @@ export class Server {
 		this.router.delete('/api/locations/:id', this.locationController.delete);
 		this.router.get('/api/locations/:id', this.locationController.get);
 
+		this.routerController = this.container.get<RouterController>('routerController');
+		this.router.get('/api/router/iptables', this.routerController.iptables);
+		this.router.get('/api/router/settings', this.routerController.listSettings);
 
 
 

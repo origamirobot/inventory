@@ -3,6 +3,7 @@ export class Device {
 
 	public Id: number;
 	public DefaultHostName: string;
+	public ModelNumber: string;
 	public ProductId: number;
 	public LocationId: number;
 	public ManufacturerId: number;
@@ -11,6 +12,7 @@ export class Device {
 	public CreatedDate: Date;
 	public UpdatedDate?: Date;
 	public SerialNumber: string;
+	public IsActive: boolean;
 
 	constructor(init?: Partial<Device>) {
 		Object.assign(this, init);
