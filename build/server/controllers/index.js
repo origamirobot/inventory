@@ -16,4 +16,6 @@ var room_controller_1 = require("./room.controller");
 Object.defineProperty(exports, "RoomController", { enumerable: true, get: function () { return room_controller_1.RoomController; } });
 var router_controller_1 = require("./router.controller");
 Object.defineProperty(exports, "RouterController", { enumerable: true, get: function () { return router_controller_1.RouterController; } });
+var light_controller_1 = require("./light.controller");
+Object.defineProperty(exports, "LightController", { enumerable: true, get: function () { return light_controller_1.LightController; } });
 //# sourceMappingURL=index.js.map

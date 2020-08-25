@@ -16,4 +16,6 @@ var pagedResult_model_1 = require("./pagedResult.model");
 Object.defineProperty(exports, "PagedResult", { enumerable: true, get: function () { return pagedResult_model_1.PagedResult; } });
 var room_model_1 = require("./room.model");
 Object.defineProperty(exports, "Room", { enumerable: true, get: function () { return room_model_1.Room; } });
+var light_model_1 = require("./light.model");
+Object.defineProperty(exports, "Light", { enumerable: true, get: function () { return light_model_1.Light; } });
 //# sourceMappingURL=index.js.map

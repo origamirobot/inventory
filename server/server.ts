@@ -4,7 +4,7 @@ import * as path from 'path';
 import { inject, Container } from "inversify";
 import { ILogger, IBanner, IDatabase } from './core';
 import { IServerSettings, IDatabaseSettings } from './config';
-import { DeviceController, ConnectionController, ManufacturerController, FieldController, ProductController, RoomController, RouterController } from './controllers';
+import { DeviceController, LightController, ConnectionController, ManufacturerController, FieldController, ProductController, RoomController, RouterController } from './controllers';
 
 
 export class Server {
@@ -19,6 +19,7 @@ export class Server {
 	protected fieldController: FieldController;
 	protected roomController: RoomController;
 	protected routerController: RouterController;
+	protected lightController: LightController;
 
 	constructor(
 		@inject('logger') private logger: ILogger,
@@ -107,6 +108,13 @@ export class Server {
 		this.router.put('/api/rooms', this.roomController.save);
 		this.router.delete('/api/rooms/:id', this.roomController.delete);
 		this.router.get('/api/rooms/:id', this.roomController.get);
+
+		this.lightController = this.container.get<LightController>('lightController');
+		this.router.get('/api/lights', this.lightController.all);
+		this.router.post('/api/lights', this.lightController.save);
+		this.router.put('/api/lights', this.lightController.save);
+		this.router.delete('/api/lights/:id', this.lightController.delete);
+		this.router.get('/api/lights/:id', this.lightController.get);
 
 		this.routerController = this.container.get<RouterController>('routerController');
 		this.router.get('/api/router/iptables', this.routerController.iptables);

@@ -35,6 +35,7 @@ var Dependencies = /** @class */ (function () {
                 container.bind('productController').to(controllers_1.ProductController);
                 container.bind('manufacturerController').to(controllers_1.ManufacturerController);
                 container.bind('roomController').to(controllers_1.RoomController);
+                container.bind('lightController').to(controllers_1.LightController);
                 container.bind('routerController').to(controllers_1.RouterController);
                 container.bind('connectionRepository').to(repositories_1.ConnectionRepository);
                 container.bind('deviceRepository').to(repositories_1.DeviceRepository);
@@ -42,6 +43,7 @@ var Dependencies = /** @class */ (function () {
                 container.bind('productRepository').to(repositories_1.ProductRepository);
                 container.bind('manufacturerRepository').to(repositories_1.ManufacturerRepository);
                 container.bind('roomRepository').to(repositories_1.RoomRepository);
+                container.bind('lightRepository').to(repositories_1.LightRepository);
                 container.bind('ipTableUtility').to(utilities_1.IpTableUtility);
                 container.bind('routerUtility').to(utilities_1.RouterUtility);
                 return [2 /*return*/];

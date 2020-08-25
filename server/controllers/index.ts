@@ -7,3 +7,4 @@ export { ManufacturerController } from './manufacturer.controller';
 export { ProductController } from './product.controller';
 export { RoomController } from './room.controller';
 export { RouterController } from './router.controller';
+export { LightController } from './light.controller';

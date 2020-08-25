@@ -7,3 +7,4 @@ export { Manufacturer } from './manufacturer.model';
 export { Product } from './product.model';
 export { PagedResult } from './pagedResult.model';
 export { Room } from './room.model';
+export { Light } from './light.model';
